@@ -1,0 +1,17 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"label": "npm install google-auth-library",
+			"command": "npm",
+			"args": [
+				"install",
+				"google-auth-library"
+			],
+			"presentation": {
+				"reveal": "silent"
+			}
+		}
+	]
+}

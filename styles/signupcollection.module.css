@@ -1,0 +1,272 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    padding: 20px;
+  }
+  
+  .formWrapper {
+    background-color: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    position: relative;
+  }
+  
+  .backButton {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #667eea;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+  }
+  
+  .backButton:hover {
+    background-color: #f3f4f6;
+  }
+  
+  .title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 2rem;
+    margin-top: 20px;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .imageUpload {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 2px dashed #e1e1e1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin: 0 auto 10px;
+    overflow: hidden;
+    transition: border-color 0.3s ease;
+  }
+  
+  .imageUpload:hover {
+    border-color: #667eea;
+  }
+  
+  .imageUploadPlaceholder {
+    color: #667eea;
+  }
+  
+  .profileImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .imageHelperText {
+    text-align: center;
+    color: #666;
+    font-size: 0.9rem;
+    margin-top: 5px;
+  }
+  
+  .inputGroup {
+    position: relative;
+    width: 100%;
+  }
+  
+  .label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #e1e1e1;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+  }
+  
+  .input:focus {
+    outline: none;
+    border-color: #667eea;
+  }
+  
+  .textarea {
+    min-height: 60px;
+    height: 60px;
+    resize: none;
+  }
+  
+  .textarea[data-has-content="true"] {
+    height: calc(1.5em * 3);
+    resize: none;
+  }
+  
+  .emailWrapper {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .emailWrapper .input {
+    flex: 1;
+  }
+  
+  .cityPincodeRow {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .cityPincodeRow .inputGroup {
+    flex: 1;
+  }
+  
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.5rem 1.5rem;
+    transition-property: color, background-color, border-color;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    cursor: pointer;
+  }
+  
+  .buttonPrimary {
+    background-color: #667eea;
+    color: white;
+    border: none;
+  }
+  
+  .buttonPrimary:hover {
+    background-color: #5a6fe0;
+  }
+  
+  .verifyButton {
+    padding: 0 20px;
+    white-space: nowrap;
+  }
+  
+  .buttonContainer {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+  }
+  
+  .otpContainer {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .otpInput {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    font-size: 1.2rem;
+    border: 2px solid #e1e1e1;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .otpInput:focus {
+    outline: none;
+    border-color: #667eea;
+  }
+  
+  .successMessage {
+    text-align: center;
+    color: #10B981;
+    margin-top: 10px;
+    font-weight: 500;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .formWrapper {
+      padding: 30px;
+    }
+  
+    .title {
+      font-size: 1.75rem;
+    }
+  
+    .cityPincodeRow {
+      flex-direction: column;
+      gap: 20px;
+    }
+  
+    .cityPincode .inputGroup {
+      width: 100%;
+    }
+  
+    .button {
+      padding: 0.5rem 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .formWrapper {
+      padding: 20px;
+    }
+  
+    .title {
+      font-size: 1.5rem;
+    }
+  
+    .input,
+    .button {
+      padding: 12px;
+    }
+  
+    .imageUpload {
+      width: 100px;
+      height: 100px;
+    }
+  
+    .otpContainer {
+      gap: 5px;
+    }
+  
+    .otpInput {
+      width: 35px;
+      height: 35px;
+      font-size: 1rem;
+    }
+  }
+  
+  

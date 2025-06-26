@@ -1,0 +1,4 @@
+{
+  "/api/create-razorpay-order/route": "app/api/create-razorpay-order/route.js",
+  "/(protected)/dashboard/page": "app/(protected)/dashboard/page.js"
+}
