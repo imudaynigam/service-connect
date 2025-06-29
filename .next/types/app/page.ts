@@ -1,4 +1,4 @@
-// File: C:\Users\udayn\Desktop\new-E-b-2-main\new-E-b-2-main\app\page.tsx
+// File: C:\Users\udayn\Desktop\new-E-b-2-main\Service Connect\app\page.tsx
 import * as entry from '../../../app/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

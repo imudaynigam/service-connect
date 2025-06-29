@@ -19,6 +19,7 @@ export default function Dashboard({ onLogout }: { onLogout: () => void }) {
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState<any>(null);
   const [notificationCount, setNotificationCount] = useState(0);
+  const [view, setView] = useState<'add' | 'main' | 'additional' | 'all'>('add');
   const router = useRouter();
 
   const fetchProfile = async () => {
@@ -93,12 +94,9 @@ export default function Dashboard({ onLogout }: { onLogout: () => void }) {
     fetchServices();
   }, []);
 
-  // Open the popup for either service type.
-  const handleServiceClick = (type: 'main' | 'additional') => {
-    setIsSidebarOpen(false);
-    setSelectedService({ service_type: type });
-    setShowServicePopup(true);
-  };
+  // Filtered services for main/additional
+  const mainServices = services.filter(s => s.service_type === 'main');
+  const additionalServices = services.filter(s => s.service_type === 'additional');
 
   // Save new service data.
   const handleSaveService = (serviceData: any) => {
@@ -208,8 +206,8 @@ export default function Dashboard({ onLogout }: { onLogout: () => void }) {
         <Sidebar
           onClose={() => setIsSidebarOpen(false)}
           onLogout={onLogout}
-          onServiceClick={handleServiceClick}
-          hasServices={hasServices}
+          onServiceClick={type => { setView('add'); setShowServicePopup(true); setSelectedService({ service_type: type }); }}
+          onNav={setView}
         />
       </div>
 
@@ -219,7 +217,7 @@ export default function Dashboard({ onLogout }: { onLogout: () => void }) {
       }`}>
         <Navbar 
           onOpenSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
-          onNotificationClick={() => router.push('/notifications')}
+          onNotificationClick={() => {}}
           notificationCount={notificationCount}
           profile={profile}
           handleLogout={onLogout}
@@ -227,14 +225,49 @@ export default function Dashboard({ onLogout }: { onLogout: () => void }) {
         />
 
         <main className="flex-1 overflow-auto">
-          {!hasServices && (
+          {view === 'add' && (
             <div className="flex flex-col md:flex-row justify-center gap-4 sm:gap-8 mt-8 sm:mt-16 md:mt-32 px-4 sm:px-0">
-              <MainServiceButton onClick={() => handleServiceClick('main')} />
-              <AdditionalServiceButton onClick={() => handleServiceClick('additional')} />
+              <MainServiceButton onClick={() => { setShowServicePopup(true); setSelectedService({ service_type: 'main' }); }} />
+              <AdditionalServiceButton onClick={() => { setShowServicePopup(true); setSelectedService({ service_type: 'additional' }); }} />
             </div>
           )}
-
-          {hasServices && (
+          {view === 'main' && (
+            <div className="p-4 sm:p-6 md:p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+              {mainServices.map((service) => (
+                <Card 
+                  key={service.id} 
+                  id={service.id}
+                  serviceName={service.service_name}
+                  serviceCost={service.cost}
+                  serviceDescription={service.description}
+                  image={service.image_url || '/images/placeholder.svg'}
+                  likes={service.likes || 0}
+                  onEdit={handleEditService}
+                  onLike={handleLikeService}
+                  onBuy={() => handleBuyService(service)}
+                />
+              ))}
+            </div>
+          )}
+          {view === 'additional' && (
+            <div className="p-4 sm:p-6 md:p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+              {additionalServices.map((service) => (
+                <Card 
+                  key={service.id} 
+                  id={service.id}
+                  serviceName={service.service_name}
+                  serviceCost={service.cost}
+                  serviceDescription={service.description}
+                  image={service.image_url || '/images/placeholder.svg'}
+                  likes={service.likes || 0}
+                  onEdit={handleEditService}
+                  onLike={handleLikeService}
+                  onBuy={() => handleBuyService(service)}
+                />
+              ))}
+            </div>
+          )}
+          {view === 'all' && (
             <div className="p-4 sm:p-6 md:p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
               {services.map((service) => (
                 <Card 
@@ -253,11 +286,8 @@ export default function Dashboard({ onLogout }: { onLogout: () => void }) {
             </div>
           )}
         </main>
-
-        {/* Add the GridIcon at the bottom center */}
-        <GridIcon onClick={() => handleServiceClick('main')} />
+        <GridIcon onClick={() => setView(view === 'all' ? 'add' : 'all')} />
       </div>
-
       {/* Mobile overlay */}
       <div 
         className={`fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden transition-opacity duration-300 ${
@@ -265,7 +295,6 @@ export default function Dashboard({ onLogout }: { onLogout: () => void }) {
         }`}
         onClick={() => setIsSidebarOpen(false)}
       />
-
       {showServicePopup && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
           <ServicePopup
